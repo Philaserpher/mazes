@@ -7,6 +7,7 @@ class Node:
             self.state = "empty"
         else:
             self.state = state
+        self.parent = None
 
     def __str__(self):
         return (
@@ -24,6 +25,9 @@ class Node:
     def set_state(self, state):
         self.state = state
 
+    def get_state(self):
+        return self.state
+
     def is_start(self):
         return self.state == "start"
 
@@ -38,3 +42,19 @@ class Node:
 
     def set_d(self, d):
         self.d = d
+
+    def visit(self):
+        if self.is_special():
+            return
+        self.state = "visiting"
+
+    def end_visit(self):
+        if self.is_special():
+            return
+        self.state = "visited"
+
+    def set_parent(self, parent):
+        self.parent = parent
+
+    def get_parent(self):
+        return self.parent

@@ -5,7 +5,7 @@ from colours import ColourConverter
 
 class MazeDrawer:
     def __init__(
-        self, maze, cell_size=[20, 20], line_thickness=1, solvers=[None]
+        self, maze, cell_size=[20, 20], line_thickness=1, solvers=[None], rate=[100, 10, 1, 0.5]
     ):
         self.maze = maze
         self.cell_size = cell_size
@@ -15,6 +15,10 @@ class MazeDrawer:
         self.n2c = ColourConverter().get_colour
 
         pygame.init()
+        self.rate = rate
+        self.rate_index = 0
+        self.current_rate = self.rate[self.rate_index]
+
         self.maze_width = maze.get_width()
         self.maze_height = maze.get_height()
         self.width = (
@@ -110,12 +114,15 @@ class MazeDrawer:
                     self.maze.generate_random(keep_special=True)
                     self.draw()
                 elif key == pygame.K_SPACE:
-                    self.solvers[0].solve(self.maze)
+                    self.solvers[0].solve(self.maze, self.update)
+                elif key == pygame.K_BACKSPACE:
+                    self.rate_index = (self.rate_index + 1) % len(self.rate)
+                    self.current_rate = self.rate[self.rate_index]
 
     def update(self):
         self.handle_events()
         self.draw()
-        self.clock.tick(1000)
+        self.clock.tick(self.current_rate)
 
     def run(self):
         while True:

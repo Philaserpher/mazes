@@ -6,8 +6,8 @@ class ColourConverter:
             "empty": (230, 230, 230),
             "end": (255, 0, 0),
             "start": (0, 0, 255),
-            "checking": (0, 255, 0),
-            "checked": (255, 255, 0),
+            "visiting": (0, 255, 0),
+            "visited": (255, 255, 0),
             "path": (255, 0, 255),
         }
         self.num_col_dict = {v: k for k, v in self.col_num_dict.items()}

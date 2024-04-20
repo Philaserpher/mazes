@@ -132,3 +132,9 @@ class Maze:
         else:
             self.start = [None, None]
             self.end = [None, None]
+
+    def reset_visited(self):
+        for node in self:
+            node.set_d(float("inf"))
+            if node.state == "visited" or node.state == "visiting" or node.state == "path":
+                node.set_state("empty")
