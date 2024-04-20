@@ -1,19 +1,17 @@
 from maze import Maze
 from node import Node
 from mazeDrawer import MazeDrawer
-from colours import ColourConverter
-import random
+from solvers import Dijkstra
 
 if __name__ == "__main__":
     size = 40
-    maze = Maze(size, size)
-    for node in maze:
-        if random.randint(0, 1) == 0:
-            node.state = 'wall'
-        else:
-            node.state = 'empty'
-    maze[0, 0].state = 'start'
-    maze[size - 1, size - 1].state = 'end'
+    maze = Maze(size, size, random_density=0.3)
 
-    renderer = MazeDrawer(maze, [20, 20], 2)
+    dijkstra_solver = Dijkstra()
+    solvers = [dijkstra_solver]
+
+    renderer = MazeDrawer(
+        maze, cell_size=[20, 20], line_thickness=2, solvers=solvers
+    )
+
     renderer.run()
